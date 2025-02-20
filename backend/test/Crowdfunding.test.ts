@@ -90,6 +90,7 @@ describe('Crowdfunding', function () {
 
       // Get information about the last block
       const lastBlock = await ethers.provider.getBlock('latest');
+      if (!lastBlock) throw new Error("Failed to get block");
 
       // Сomparison
       expect(project.projectId).to.equal(0);
@@ -132,6 +133,7 @@ describe('Crowdfunding', function () {
         .connect(donor1)
         .donation(0, { value: ethers.parseEther('2') });
       const receipt = await txDonation.wait();
+      if (!receipt) throw new Error("Failed to get transaction receipt");
       const currentBlock = await ethers.provider.getBlock(receipt.blockNumber);
 
       // Check project state
@@ -181,6 +183,7 @@ describe('Crowdfunding', function () {
       const receipt = await tx.wait();
 
       // Calculate gas used (BigInt arithmetic)
+      if (!receipt) throw new Error("Failed to get transaction receipt");
       const gasUsed = receipt.gasUsed * receipt.gasPrice;
 
       // Get balance of donor1 after donation
@@ -284,6 +287,7 @@ describe('Crowdfunding', function () {
       const receipt = await tx.wait();
 
       // Calculate Gas Cost
+      if (!receipt) throw new Error("Failed to get transaction receipt");
       const gasUsed = receipt.gasUsed * receipt.gasPrice;
 
       // Сomparison
